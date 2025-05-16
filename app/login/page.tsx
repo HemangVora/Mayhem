@@ -6,6 +6,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useRouter } from "next/navigation";
 import { Check, ArrowLeft, Loader2 } from "lucide-react";
 import { useUserStore } from "../store";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,23 +21,27 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // In a real implementation, this would use Farcaster auth kit
-      // For now, we'll simulate the login with a mock API call
-      const response = await fetch("/api/auth/farcaster", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "demo_user",
-          address: "0x1234567890123456789012345678901234567890",
-        }),
+      // Use NextAuth.js signIn method
+      const result = await signIn("farcaster", {
+        username: "demo_user",
+        address: "0x1234567890123456789012345678901234567890",
+        redirect: false,
       });
 
-      const data = await response.json();
-
-      if (data.success) {
-        setCurrentUser(data.user);
+      if (result?.ok) {
+        // Set local user state for immediate UI updates
+        setCurrentUser({
+          id: "farcaster:123456",
+          farcasterUserId: "123456",
+          username: "demo_user",
+          address: "0x1234567890123456789012345678901234567890",
+          avatar: `https://warpcast.com/~/avatar/demo_user`,
+          credits: 1000,
+          tokensEarned: 0,
+          gamesPlayed: 0,
+          gamesWon: 0,
+          createdAt: new Date(),
+        });
         setIsAuthenticated(true);
         setLoginStep("success");
 
@@ -47,7 +52,7 @@ export default function LoginPage() {
       } else {
         // Handle error
         setLoginStep("farcaster");
-        console.error("Login failed:", data.error);
+        console.error("Login failed:", result?.error);
       }
     } catch (error) {
       console.error("Login error:", error);
