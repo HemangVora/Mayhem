@@ -265,12 +265,7 @@ export default function GamePlayPage() {
 
           <div className="bg-gray-800 rounded-xl overflow-hidden mb-8">
             <div className="relative w-full aspect-square max-w-md mx-auto">
-              <Image
-                src={finalWinner.imageUrl}
-                alt={finalWinner.name}
-                layout="fill"
-                objectFit="cover"
-              />
+              <img src={finalWinner.imageUrl} alt={finalWinner.name} />
             </div>
 
             <div className="p-6 text-center">
@@ -420,12 +415,7 @@ export default function GamePlayPage() {
               }`}
             >
               <div className="relative aspect-square">
-                <Image
-                  src={meme.imageUrl}
-                  alt={meme.name}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                <img src={meme.imageUrl} alt={meme.name} />
 
                 {/* Winner Badge */}
                 {showResults && winners.some((w) => w.id === meme.id) && (

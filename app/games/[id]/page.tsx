@@ -306,11 +306,9 @@ export default function GameDetailPage() {
                   className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition-colors"
                 >
                   <div className="relative aspect-square">
-                    <Image
+                    <img
                       src={meme.imageUrl}
                       alt={meme.name}
-                      layout="fill"
-                      objectFit="cover"
                       className="w-full"
                     />
                     {meme.disqualified && (

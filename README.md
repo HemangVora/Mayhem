@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mayhem - Memecoin Battles
+
+Mayhem is a web3 application for creating and participating in memecoin battles on Base chain. Users can submit memes, vote for their favorites, and winners get launched as real tokens with utility.
+
+## Features
+
+- **Create Games**: Creators can set up memecoin battles with custom settings
+- **Submit Memes**: Users can submit memes with name, ticker, image, and description
+- **Vote in Rounds**: Players use credits to vote on their favorite memes
+- **Launch on Chain**: Winning memes get launched as tokens on Base chain
+- **Community Chat**: Each token gets a dedicated chat room
+- **Daily Tasks**: Complete tasks to earn more tokens and build community
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, TypeScript, TailwindCSS
+- **Authentication**: Farcaster Auth, Web3 Wallet Connection (RainbowKit)
+- **Blockchain**: Base Chain, Ethereum (via ethers.js)
+- **State Management**: Zustand
+- **Styling**: TailwindCSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18+)
+- npm or yarn
+- A Farcaster account (for authentication)
+- A Web3 wallet (for blockchain interactions)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone https://github.com/yourusername/mayhem.git
+   cd mayhem
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Create a `.env.local` file with the following variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```
+   NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
+   NEXT_PUBLIC_APP_DOMAIN=mayhem.xyz
+   NEXT_PUBLIC_APP_URI=https://mayhem.xyz
+   ```
 
-## Deploy on Vercel
+4. Start the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Core Workflows
+
+### For Creators
+
+1. Create a game specifying entry limit, start time, and round settings
+2. Wait for meme submissions
+3. Moderate submissions based on community guidelines
+4. When game starts, creators can monitor the rounds
+5. After the final round, the winning meme is launched as a token
+
+### For Players
+
+1. Browse and join upcoming games
+2. Submit memes to games before they start
+3. Vote for favorite memes during active rounds
+4. Earn tokens based on participation and voting
+5. Join token communities and complete daily tasks
+
+## Project Structure
+
+- `/app` - Next.js app directory
+  - `/api` - API endpoints
+  - `/components` - Reusable UI components
+  - `/games` - Game-related pages
+  - `/chat` - Token community chat rooms
+  - `/store` - Zustand state management
+  - `/types` - TypeScript type definitions
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
