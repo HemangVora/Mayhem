@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.28;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -9,8 +9,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 // Interface for creating tokens
 interface ITokenCreator {
     function createToken(
-        string memory name,
-        string memory symbol,
+        string calldata name,
+        string calldata symbol,
         uint256 initialSupply,
         address owner
     ) external returns (address);
@@ -262,12 +262,12 @@ contract MemeCompetition is Ownable {
     }
     function submitMeme(
         uint256 _gameId,
-        string memory _name,
-        string memory _description,
-        string memory _tokenName,
-        string memory _tokenSymbol,
-        string memory _uniqueId,
-        string memory _imageUrl
+        string calldata _name,
+        string calldata _description,
+        string calldata _tokenName,
+        string calldata _tokenSymbol,
+        string calldata _uniqueId,
+        string calldata _imageUrl
     ) external {
         require(games[_gameId].isActive, "Game is not active");
         require(!games[_gameId].isStarted, "Game already started");
@@ -398,7 +398,6 @@ contract MemeCompetition is Ownable {
         require(games[_gameId].isActive, "Game already ended");
 
         uint256 currentRound = games[_gameId].currentRound;
-        Round storage round = rounds[_gameId][currentRound];
 
         // Eliminate participants who didn't vote
         EnumerableSet.AddressSet storage participantsSet = gameParticipants[

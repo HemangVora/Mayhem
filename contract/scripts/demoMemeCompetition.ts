@@ -85,59 +85,60 @@ async function main() {
 
     // Fund participant wallets with some ETH from the admin wallet
     console.log("\nFunding participant wallets with ETH...");
-    // for (let i = 0; i < participantWallets.length; i++) {
-    //   const wallet = participantWallets[i];
-    //   const balance = await provider.getBalance(wallet.address);
+    for (let i = 0; i < participantWallets.length; i++) {
+      const wallet = participantWallets[i];
+      const balance = await provider.getBalance(wallet.address);
 
-    //   if (balance < ethers.parseEther("35")) {
-    //     console.log(`Funding wallet ${wallet.address}...`);
-    //     try {
-    //       const fundTx = await adminWallet.sendTransaction({
-    //         to: wallet.address,
-    //         value: ethers.parseEther("40"),
-    //         gasLimit: 21000,
-    //         gasPrice: ethers.parseUnits("10", "gwei"),
-    //       });
-    //       await fundTx.wait();
-    //       console.log(`Funded ${wallet.address} with 40 ETH`);
-    //     } catch (error: any) {
-    //       console.error(`Error funding wallet: ${error.message}`);
-    //     }
-    //   } else {
-    //     console.log(
-    //       `Wallet ${
-    //         wallet.address
-    //       } already has sufficient funds: ${ethers.formatEther(balance)} ETH`
-    //     );
-    //   }
-    //   const ETH_TOKEN_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
+      if (balance < ethers.parseEther("0.06")) {
+        console.log(`Funding wallet ${wallet.address}...`);
+        try {
+          const fundTx = await adminWallet.sendTransaction({
+            to: wallet.address,
+            value: ethers.parseEther("0.07"),
+            gasLimit: 21000,
+            gasPrice: ethers.parseUnits("10", "gwei"),
+          });
+          await fundTx.wait();
+          console.log(`Funded ${wallet.address} with ETH`);
+        } catch (error: any) {
+          console.error(`Error funding wallet: ${error.message}`);
+        }
+      } else {
+        console.log(
+          `Wallet ${
+            wallet.address
+          } already has sufficient funds: ${ethers.formatEther(balance)} ETH`
+        );
+      }
+      const ETH_TOKEN_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
 
-    //   // 3. Important fix: Approve the contract to spend ETH tokens
-    //   try {
-    //     // Get the ETH token contract
-    //     const ethToken = new ethers.Contract(
-    //       ETH_TOKEN_ADDRESS,
-    //       ["function approve(address spender, uint256 amount) returns (bool)"],
-    //       wallet
-    //     );
+      // 3. Important fix: Approve the contract to spend ETH tokens
+      try {
+        // Get the ETH token contract
+        const ethToken = new ethers.Contract(
+          ETH_TOKEN_ADDRESS,
+          ["function approve(address spender, uint256 amount) returns (bool)"],
+          wallet
+        );
 
-    //     // Approve the MemeCompetition contract to spend tokens
-    //     const approveTx = await ethToken.approve(
-    //       contractAddress,
-    //       ethers.parseEther("50"), // Approve more than needed
-    //       getTxOptions()
-    //     );
-    //     await approveTx.wait();
-    //     console.log(
-    //       `Wallet ${wallet.address} approved contract to spend ETH tokens`
-    //     );
-    //   } catch (error: any) {
-    //     console.error(`Error approving tokens: ${error.message}`);
-    //   }
-    // }
+        // Approve the MemeCompetition contract to spend tokens
+        // const approveTx = await ethToken.approve(
+        //   contractAddress,
+        //   ethers.parseEther("50"), // Approve more than needed
+        //   getTxOptions()
+        // );
+        // await approveTx.wait();
+        console.log(
+          `Wallet ${wallet.address} approved contract to spend ETH tokens`
+        );
+      } catch (error: any) {
+        console.error(`Error approving tokens: ${error.message}`);
+      }
+    }
+
     // Create a game
     console.log("\nCreating a new game...");
-    const entryFee = ethers.parseEther("30"); // 30 ETH
+    const entryFee = ethers.parseEther("0.000000000000000001"); // 30 ETH
     const roundDuration = 60; // 1 minute
 
     const createGameTx = await memeCompetition.createGame(
